@@ -51,12 +51,3 @@ function startGame() {
 
 startGame();
 
-// keyboard control 
-document.addEventListener('keydown', (event) => {
-    const key = event.key;
-    
-    if(key === 'ArrowUp') pressDown();
-    if(key === 'ArrowDown') pressUp();
-    if(key === 'ArrowRight') pressRight();
-    if(key === 'ArrowLeft') pressLeft();
-});
