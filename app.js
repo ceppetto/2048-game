@@ -11,6 +11,8 @@ function setBoard() {
             board[i][j] = 0;
         }
     }
+
+    randBoxPicker();
 }
 
 // generate a random number (2 or 4)
@@ -22,56 +24,126 @@ function randNumGenerator() {
 
 // get a empty box
 function randBoxPicker() {
+    let randNum = randNumGenerator();
+
     const randCol = Math.floor(Math.random() * 4);
     const randRow = Math.floor(Math.random() * 4);
     
     if(board[randCol][randRow] !== 0) {
         randBoxPicker();
     } else {
-        return [randCol, randRow];
+        board[randCol][randRow] = randNum;
     }
 }
 
 function paintBoard() {
-    // change board values
-    const randNum = randNumGenerator(); // 2 or 4
-    const randPos = randBoxPicker();
-    const randCol = randPos[0];
-    const randRow = randPos[1];
-    board[randCol][randRow] = randNum;
+    let isFull = checkFull();
+    if(isFull) randBoxPicker();
 
-    // change board values
-    let pickedTr = document.getElementById('tr-' + randCol);
-    pickedTr.children[randRow].innerText = randNum;
+    for(let i = 0; i < 4; i ++) {
+        let pickedTr = document.getElementById('tr-' + i);
+        for(let j = 0; j < 4; j ++) {
+            pickedTr.children[j].innerText = board[i][j];
+        }
+    }
+    
 }
 
 function startGame() {
     setBoard();
     paintBoard();
-    paintBoard();
+}
+
+function checkFull() {
+    let flag = 0;
+    for(let i = 0; i < 4; i ++) {
+        for(let j = 0; j < 4; j ++) {
+            if(board[i][j] === 0) {
+                flag = 1;
+                return flag;
+            }
+        }
+    }
+
+    return flag;
+}
+
+function endGame() {
+
 }
 
 // keyboard controls
 function pressUp() {
-    for(let i = 3; i > 0; i --) {
-        for(let j = 0; j < 3; j ++) {
-            
+    for(let loop = 0; loop < 3; loop ++) {
+        for(let i = 0; i < 3; i ++) {
+            for(let j = 0; j < 4; j ++) {
+                if(board[i][j] === 0) {
+                    board[i][j] = board[i+1][j];
+                    board[i+1][j] = 0;
+                } else if (board[i][j] === board[i+1][j]) {
+                    board[i][j] += board[i+1][j];
+                    board[i+1][j] = 0;
+                }
+            }
         }
     }
+
+    paintBoard();
 }
 
 function pressDown() {
-    console.log("down");
+    for(let loop = 0; loop < 3; loop ++) {
+        for(let i = 3; i > 0; i --) {
+            for(let j = 0; j < 4; j ++) {
+                if(board[i][j] === 0) {
+                    board[i][j] = board[i-1][j];
+                    board[i-1][j] = 0;
+                } else if (board[i][j] === board[i-1][j]) {
+                    board[i][j] += board[i-1][j];
+                    board[i-1][j] = 0;
+                }
+            }
+        }
+    }
+
+    paintBoard();
 }
 
 function pressRight() {
-    console.log("right");
+    for(let loop = 0; loop < 3; loop ++) {
+        for(let i = 0; i < 4; i ++) {
+            for(let j = 3; j > 0; j --) {
+                if(board[i][j] === 0) {
+                    board[i][j] = board[i][j-1];
+                    board[i][j-1] = 0;
+                } else if (board[i][j] === board[i][j-1]) {
+                    board[i][j] += board[i][j-1];
+                    board[i][j-1] = 0;
+                }
+            }
+        }
+    }
+
+    paintBoard();
 }
 
 function pressLeft() {
-    console.log("left");
-}
+    for(let loop = 0; loop < 3; loop ++) {
+        for(let i = 0; i < 4; i ++) {
+            for(let j = 0; j < 3; j ++) {
+                if(board[i][j] === 0) {
+                    board[i][j] = board[i][j+1];
+                    board[i][j+1] = 0;
+                } else if (board[i][j] === board[i][j+1]) {
+                    board[i][j] += board[i][j+1];
+                    board[i][j+1] = 0;
+                }
+            }
+        }
+    }
 
+    paintBoard();
+}
 
 // start a game
 startGame();
