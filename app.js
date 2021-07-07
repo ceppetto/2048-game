@@ -33,12 +33,14 @@ function randBoxPicker() {
 }
 
 function paintBoard() {
+    // change board values
     const randNum = randNumGenerator(); // 2 or 4
     const randPos = randBoxPicker();
     const randCol = randPos[0];
     const randRow = randPos[1];
     board[randCol][randRow] = randNum;
 
+    // change board values
     let pickedTr = document.getElementById('tr-' + randCol);
     pickedTr.children[randRow].innerText = randNum;
 }
@@ -49,5 +51,37 @@ function startGame() {
     paintBoard();
 }
 
+// keyboard controls
+function pressUp() {
+    for(let i = 3; i > 0; i --) {
+        for(let j = 0; j < 3; j ++) {
+            
+        }
+    }
+}
+
+function pressDown() {
+    console.log("down");
+}
+
+function pressRight() {
+    console.log("right");
+}
+
+function pressLeft() {
+    console.log("left");
+}
+
+
+// start a game
 startGame();
+
+document.addEventListener('keydown', (event) => {
+    const key = event.key;
+    
+    if(key === 'ArrowUp') pressUp();
+    if(key === 'ArrowDown') pressDown();
+    if(key === 'ArrowRight') pressRight();
+    if(key === 'ArrowLeft') pressLeft();
+});
 
