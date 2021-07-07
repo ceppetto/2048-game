@@ -7,12 +7,30 @@ body {
 	align-items: center;
 }
 
+.header {
+	width: 700px;
+	margin: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header h1 {
+	display: inline;
+	padding-left: 10px;
+}
+
+.header div {
+	min-width: 100px;
+	display: inline;
+}
+
 #board {
 	width: 700px;
 	height: 700px;
 	background-color: #bbada0;
 	border: 10px solid #bbada0;
-	border-radius: 5px;
+	border-radius: 10px;
 }
 
 #board td {
@@ -20,5 +38,7 @@ body {
 	height: 120px;
 	background-color: #cdc1b4;
 	border: 10px solid #bbada0;
-	border-radius: 5px;
+	text-align: center;
+	font-size: 40px;
+	font-weight: bold;
 }
