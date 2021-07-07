@@ -1,22 +1,6 @@
 let board = new Array(4);
 
-const box00 = document.getElementById('#b00');
-const box01 = document.getElementById('#b01');
-const box02 = document.getElementById('#b02');
-const box03 = document.getElementById('#b03');
-const box10 = document.getElementById('#b10');
-const box11 = document.getElementById('#b11');
-const box12 = document.getElementById('#b12');
-const box13 = document.getElementById('#b13');
-const box20 = document.getElementById('#b20');
-const box21 = document.getElementById('#b21');
-const box22 = document.getElementById('#b22');
-const box23 = document.getElementById('#b23');
-const box30 = document.getElementById('#b30');
-const box31 = document.getElementById('#b31');
-const box32 = document.getElementById('#b32');
-const box33 = document.getElementById('#b33');
-
+// set board value to zero
 function setBoard() {
     for(let i = 0; i < 4; i ++) {
         board[i] = new Array(4);
@@ -29,13 +13,45 @@ function setBoard() {
     }
 }
 
+// generate a random number (2 or 4)
 function randNumGenerator() {
-
+    const randNum = Math.floor(Math.random() * 2);
+    if(randNum == 0) return 2;
+    if(randNum == 1) return 4;
 }
 
-setBoard();
-randNumGenerator();
+// get a empty box
+function randBoxPicker() {
+    const randCol = Math.floor(Math.random() * 4);
+    const randRow = Math.floor(Math.random() * 4);
+    
+    if(board[randCol][randRow] !== 0) {
+        randBoxPicker();
+    } else {
+        return [randCol, randRow];
+    }
+}
 
+function paintBoard() {
+    const randNum = randNumGenerator(); // 2 or 4
+    const randPos = randBoxPicker();
+    const randCol = randPos[0];
+    const randRow = randPos[1];
+    board[randCol][randRow] = randNum;
+
+    let pickedTr = document.getElementById('tr-' + randCol);
+    pickedTr.children[randRow].innerText = randNum;
+}
+
+function startGame() {
+    setBoard();
+    paintBoard();
+    paintBoard();
+}
+
+startGame();
+
+// keyboard control 
 document.addEventListener('keydown', (event) => {
     const key = event.key;
     
